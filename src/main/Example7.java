@@ -21,6 +21,7 @@ public class Example7 {
   public static void main(String[] args) throws Exception {
 
       System.out.println(DataHubService.getInstance().getSearchResultByQuery("artist", "1", "18", "son tung mtp"));
+      System.out.println(DataHubService.getInstance().getLyricBySongId("ZW708CDU"));
    //    Player mediaPlayer = Manager.createRealizedPlayer(mediaURL1
   }
 public static final String formatTime(long secs) {
