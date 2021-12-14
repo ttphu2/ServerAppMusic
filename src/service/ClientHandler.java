@@ -97,22 +97,12 @@ public class ClientHandler extends Thread {
                     out.newLine();
                     out.flush();
                 }
-                else if(inputLine.equals("SECRETKEY")){
-                    String cipherText="";
-                    try {
-                       cipherText = Base64.getEncoder().encodeToString(RSAUtil.encrypt(aesUtil.key, RSAUtil.publicKey));
-                    } catch (BadPaddingException ex) {
-                        Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (IllegalBlockSizeException ex) {
-                        Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (InvalidKeyException ex) {
-                        Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (NoSuchPaddingException ex) {
-                        Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (NoSuchAlgorithmException ex) {
-                        Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    out.write(cipherText);
+                else if(inputLine.indexOf("SECRETKEY") != -1){
+                    String[] arr = inputLine.split("_");
+                    String secretKey= !arr[1].equals("") ? RSAUtil.decrypt(arr[1], RSAUtil.privateKey) : "";
+                    System.out.println("Secret Key client is: "+secretKey);
+                    aesUtil.setKey(secretKey);
+                    out.write("success");
                     out.newLine();
                     out.flush(); 
                 }
@@ -128,6 +118,16 @@ public class ClientHandler extends Thread {
             out.close();
             clientSocket.close();
         } catch (IOException ex) {
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalBlockSizeException ex) {
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidKeyException ex) {
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (BadPaddingException ex) {
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchPaddingException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

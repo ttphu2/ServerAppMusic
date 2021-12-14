@@ -27,9 +27,15 @@ public class AESUtil {
     public String key;
     private static String initVector="encryptionIntVec";
 
-
     public AESUtil() {
-       key=RandomStringUtils.randomAlphanumeric(16);
+    }
+    public void setKey(String key)
+    {
+        this.key = key;
+    }
+    public String getKey()
+    {
+        return this.key;
     }
     public String encrypt(String value) {
         try {
@@ -66,18 +72,7 @@ public class AESUtil {
         return null;
     }
     public static void main(String[] args) throws IllegalBlockSizeException, InvalidKeyException, NoSuchPaddingException, BadPaddingException, NoSuchAlgorithmException {
-//        init();
-//        String cipherText = Base64.getEncoder().encodeToString(RSAUtil.encrypt(key, RSAUtil.publicKey));
-//        System.out.println("Key decrypt" + cipherText + "send to server");
-//        String secretKey = RSAUtil.decrypt(cipherText, RSAUtil.privateKey);
-//        System.out.println("sk"+secretKey);
-//        
-//        String originalString = "message";
-//	System.out.println("Original String to encrypt - " + originalString);
-//	String encryptedString = encrypt(originalString);
-//	System.out.println("Encrypted String - " + encryptedString);
-//	String decryptedString = decrypt(encryptedString);
-//	System.out.println("After decryption - " + decryptedString);
+
 
     }
 }
